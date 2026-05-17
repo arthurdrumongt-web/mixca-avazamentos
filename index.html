@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mix Caça Vazamentos | Detecção em Brasília</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Open+Sans:wght@400;600&family=Roboto+Slab:wght@500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-dark: #1B3A5C;
+            --primary-medium: #1E4D8C;
+            --cyan: #4FC3E8;
+            --white: #FFFFFF;
+            --glass: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --whatsapp: #25D366;
+            --font-titles: 'Montserrat', sans-serif;
+            --font-body: 'Open Sans', sans-serif;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--primary-dark);
+            color: var(--white);
+            font-family: var(--font-body);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: var(--font-titles);
+            font-weight: 800;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: var(--transition);
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section-padding {
+            padding: 100px 0;
+        }
+
+        /* --- Header & Navbar --- */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(27, 58, 92, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--glass-border);
+            transition: var(--transition);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 90px;
+        }
+
+        .logo {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        /* SVG Logo Styles */
+        .logo-svg {
+            height: 45px;
+            width: auto;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .nav-links a:hover {
+            color: var(--cyan);
+        }
+
+        .btn-call {
+            background-color: var(--cyan);
+            color: var(--primary-dark);
+            padding: 12px 24px;
+            border-radius: 99px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 14px rgba(79, 195, 232, 0.4);
+        }
+
+        .btn-call:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(79, 195, 232, 0.6);
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+        }
+
+        .menu-toggle span {
+            width: 30px;
+            height: 3px;
+            background-color: var(--white);
+            border-radius: 3px;
+            transition: var(--transition);
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-medium) 100%);
+            position: relative;
+            padding-top: 100px;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 150px;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%231B3A5C' fill-opacity='1' d='M0,224L60,213.3C120,203,240,181,360,181.3C480,181,600,203,720,186.7C840,171,960,117,1080,106.7C1200,96,1320,128,1380,144L1440,160L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+            background-size: cover;
+            z-index: 1;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            gap: 60px;
+            z-index: 2;
+        }
+
+        .hero-text h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            line-height: 1.1;
+            margin-bottom: 24px;
+        }
+
+        .hero-text p {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            margin-bottom: 40px;
+            max-width: 500px;
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn-whatsapp {
+            background-color: var(--whatsapp);
+            color: white;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.1rem;
+            box-shadow: 0 8px 24px rgba(37, 211, 102, 0.3);
+        }
+
+        .btn-whatsapp:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(37, 211, 102, 0.5);
+        }
+
+        .btn-outline {
+            border: 2px solid var(--cyan);
+            color: var(--cyan);
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.1rem;
+        }
+
+        .btn-outline:hover {
+            background-color: var(--cyan);
+            color: var(--primary-dark);
+            transform: translateY(-4px);
+        }
+
+        .hero-visual svg {
+            width: 100%;
+            height: auto;
+            max-width: 500px;
+            filter: drop-shadow(0 0 30px rgba(79, 195, 232, 0.3));
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* --- Cards & Grid General --- */
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .grid-2x2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+
+        .glass-card {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 40px;
+            transition: var(--transition);
+        }
+
+        .glass-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--cyan);
+            box-shadow: 0 12px 30px rgba(79, 195, 232, 0.15);
+        }
+
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(79, 195, 232, 0.15);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            color: var(--cyan);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            margin-bottom: 16px;
+        }
+
+        .card-desc {
+            opacity: 0.8;
+            font-size: 1rem;
+        }
+
+        /* --- Diferenciais --- */
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+        }
+
+        .section-header .subtitle {
+            color: var(--cyan);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        /* --- Serviços --- */
+        .services {
+            background-color: rgba(255, 255, 255, 0.02);
+        }
+
+        .service-card {
+            display: flex;
+            gap: 20px;
+        }
+
+        /* --- Por que Escolher --- */
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            margin-top: 40px;
+        }
+
+        .benefit-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .benefit-item svg {
+            color: var(--cyan);
+            flex-shrink: 0;
+        }
+
+        /* --- CTA Central --- */
+        .cta-banner {
+            background: linear-gradient(135deg, var(--primary-medium) 0%, #173255 100%);
+            border-radius: 24px;
+            padding: 60px;
+            text-align: center;
+            border: 1px solid var(--cyan);
+            margin: 60px 0;
+        }
+
+        .cta-banner h2 {
+            font-size: 2.25rem;
+            margin-bottom: 32px;
+        }
+
+        .cta-number {
+            display: block;
+            font-size: 2.5rem;
+            margin: 20px 0;
+            color: var(--cyan);
+        }
+
+        /* --- Pagamento --- */
+        .payment-section {
+            text-align: center;
+        }
+
+        .payment-badges {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+
+        .payment-badge {
+            background: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 60px;
+            min-width: 120px;
+        }
+
+        /* --- Footer --- */
+        footer {
+            background-color: #122841;
+            padding: 80px 0 40px;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 60px;
+        }
+
+        .footer-info p {
+            margin-top: 20px;
+            opacity: 0.7;
+            max-width: 400px;
+        }
+
+        .footer-links h4 {
+            margin-bottom: 24px;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            opacity: 0.7;
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+            color: var(--cyan);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 40px;
+            border-top: 1px solid var(--glass-border);
+            opacity: 0.5;
+            font-size: 0.9rem;
+        }
+
+        /* --- Floating WhatsApp --- */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 60px;
+            height: 60px;
+            background-color: var(--whatsapp);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+            box-shadow: 0 8px 24px rgba(37, 211, 102, 0.4);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+        }
+
+        .whatsapp-float:hover::after {
+            content: "Fale conosco no WhatsApp";
+            position: absolute;
+            right: 75px;
+            background: white;
+            color: var(--primary-dark);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            white-space: nowrap;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        /* --- Animations --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- Responsiveness --- */
+        @media (max-width: 1024px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-text p {
+                margin: 0 auto 40px;
+            }
+
+            .hero-btns {
+                justify-content: center;
+            }
+
+            .grid-3 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .nav-links.mobile-active {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 90px;
+                left: 0;
+                width: 100%;
+                background: var(--primary-dark);
+                padding: 40px;
+                border-bottom: 1px solid var(--glass-border);
+            }
+
+            .grid-3, .grid-2x2, .benefits-grid, .footer-content {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-btns a {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .cta-banner {
+                padding: 40px 20px;
+            }
+
+            .cta-banner h2 {
+                font-size: 1.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header id="header">
+        <div class="container">
+            <nav>
+                <a href="#" class="logo">
+                    <svg class="logo-svg" viewBox="0 0 300 160" xmlns="http://www.w3.org/2000/svg">
+                        <!-- GEOMETRIC MIX (Superior) -->
+                        <g transform="translate(45, 10)" stroke="white" stroke-width="5" stroke-linecap="round" fill="none">
+                            <!-- M Stylized (Inverted internal V) -->
+                            <path d="M0 45V0 M5 10 L20 35 M35 10 L20 35 M40 0V45" />
+                            
+                            <!-- I (Double Parallel) -->
+                            <rect x="65" y="0" width="4" height="45" fill="white" rx="2" stroke="none" />
+                            <rect x="78" y="0" width="4" height="45" fill="white" rx="2" stroke="none" />
+                            
+                            <!-- X Stylized -->
+                            <path d="M102 0 L142 45 M142 0 L102 45" />
+                            <path d="M115 45 L122 35 L129 45" />
+                        </g>
+                        
+                        <!-- TEXT: Caça Vazamentos (Central) -->
+                        <text x="50%" y="95" fill="white" font-family="'Roboto Slab', serif" font-weight="500" font-size="28" text-anchor="middle">Caça Vazamentos</text>
+                        
+                        <!-- DROP & RIPPLES (Inferior) -->
+                        <g transform="translate(150, 145)">
+                            <!-- Water Drop -->
+                            <path d="M0 -40 Q5 -25 10 -15 A10 10 0 1 1 -10 -15 Q-5 -25 0 -40 Z" fill="white" stroke="none" />
+                            <!-- Reflection on drop -->
+                            <path d="M3 -18 Q6 -16 5 -12" stroke="var(--cyan)" stroke-width="2" fill="none" opacity="0.8" />
+                            
+                            <!-- Waves/Ripples below -->
+                            <ellipse cx="0" cy="0" rx="45" ry="7" stroke="var(--cyan)" stroke-width="2.5" fill="none" opacity="0.7" />
+                            <ellipse cx="0" cy="4" rx="30" ry="4" stroke="var(--cyan)" stroke-width="1.5" fill="none" opacity="0.5" />
+                        </g>
+                    </svg>
+                </a>
+
+                <ul class="nav-links" id="nav-links">
+                    <li><a href="#inicio">Início</a></li>
+                    <li><a href="#servicos">Serviços</a></li>
+                    <li><a href="#diferenciais">Diferenciais</a></li>
+                    <li><a href="#contato">Contato</a></li>
+                </ul>
+
+                <div class="nav-cta">
+                    <a href="tel:+556193763352" class="btn-call">
+                        <span>📞 Ligar Agora</span>
+                    </a>
+                </div>
+
+                <div class="menu-toggle" id="menu-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="inicio">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text reveal">
+                    <h1>Solução Completa para Seus Vazamentos!</h1>
+                    <p>Detecção precisa de vazamentos com tecnologia avançada. Atendemos em Brasília e região com rapidez e eficiência.</p>
+                    <div class="hero-btns">
+                        <a href="https://wa.me/556193763352" class="btn-whatsapp">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.414 0 .004 5.412 0 12.048c0 2.12.554 4.189 1.605 6.006L0 24l6.149-1.613a11.782 11.782 0 005.9 1.583h.005c6.634 0 12.045-5.414 12.049-12.05a11.75 11.75 0 00-3.489-8.496z"/></svg>
+                            Chamar no WhatsApp
+                        </a>
+                        <a href="tel:+556193763352" class="btn-outline">
+                            Telefone Direto
+                        </a>
+                    </div>
+                </div>
+                <div class="hero-visual reveal">
+                    <!-- Stylized Water Drop / Wave SVG -->
+                    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="dropGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:var(--cyan);stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:var(--primary-medium);stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
+                        <path d="M100 20 Q130 80 160 130 A60 60 0 1 1 40 130 Q70 80 100 20 Z" fill="url(#dropGrad)" />
+                        <!-- Waves -->
+                        <path d="M50 160 Q100 140 150 160 M30 180 Q100 160 170 180" fill="none" stroke="white" stroke-width="2" opacity="0.5" stroke-linecap="round" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Diferenciais -->
+    <section class="section-padding" id="diferenciais">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="subtitle">Excelência no Serviço</span>
+                <h2>Por que a Mix é Diferente?</h2>
+            </div>
+            <div class="grid-3">
+                <div class="glass-card reveal">
+                    <div class="card-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+                    </div>
+                    <h3 class="card-title">Até 12x Sem Juros</h3>
+                    <p class="card-desc">Aceitamos Visa, Mastercard e outras bandeiras com pagamento facilitado e seguro.</p>
+                </div>
+                <div class="glass-card reveal">
+                    <div class="card-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    </div>
+                    <h3 class="card-title">Avaliação 5 Estrelas</h3>
+                    <p class="card-desc">Empresa verificada e altamente avaliada pelos nossos clientes no Google My Business.</p>
+                </div>
+                <div class="glass-card reveal">
+                    <div class="card-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    </div>
+                    <h3 class="card-title">Tecnologia de Ponta</h3>
+                    <p class="card-desc">Equipamentos eletrônicos modernos para geofonamento e detecção não destrutiva.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Serviços -->
+    <section class="section-padding services" id="servicos">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="subtitle">O Que Fazemos</span>
+                <h2>Nossos Serviços Especializados</h2>
+            </div>
+            <div class="grid-2x2">
+                <div class="glass-card service-card reveal">
+                    <div class="card-icon">🏠</div>
+                    <div>
+                        <h3 class="card-title">Vazamentos em Paredes</h3>
+                        <p class="card-desc">Detecção precisa de infiltrações e umidade oculta em paredes e lajes, evitando quebras desnecessárias.</p>
+                    </div>
+                </div>
+                <div class="glass-card service-card reveal">
+                    <div class="card-icon">🚿</div>
+                    <div>
+                        <h3 class="card-title">Vazamentos em Encanamentos</h3>
+                        <p class="card-desc">Localização de tubulações com vazamento sob pisos e concretos usando tecnologia de geafone.</p>
+                    </div>
+                </div>
+                <div class="glass-card service-card reveal">
+                    <div class="card-icon">💧</div>
+                    <div>
+                        <h3 class="card-title">Vazamentos em Piscinas</h3>
+                        <p class="card-desc">Identificação técnica de perdas de água em piscinas e reservatórios de grande porte.</p>
+                    </div>
+                </div>
+                <div class="glass-card service-card reveal">
+                    <div class="card-icon">🏢</div>
+                    <div>
+                        <h3 class="card-title">Atendimento Comercial</h3>
+                        <p class="card-desc">Soluções robustas para condomínios, empresas e estabelecimentos comerciais em todo o DF.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Por que Escolher / Benefícios -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="hero-content">
+                <div class="reveal">
+                    <span class="subtitle">Vantagem Exclusiva</span>
+                    <h2>A Melhor Escolha em Brasília</h2>
+                    <p style="margin-top: 20px;">Nossa equipe técnica é treinada para resolver problemas complexos com o mínimo de impacto na sua rotina.</p>
+                    
+                    <div class="benefits-grid">
+                        <div class="benefit-item">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <span>Atendimento rápido no DF</span>
+                        </div>
+                        <div class="benefit-item">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <span>Orçamento grátis inicial</span>
+                        </div>
+                        <div class="benefit-item">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <span>Técnicos certificados</span>
+                        </div>
+                        <div class="benefit-item">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <span>Última geração de geafones</span>
+                        </div>
+                        <div class="benefit-item">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <span>Parcelamento Facilitado</span>
+                        </div>
+                        <div class="benefit-item">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <span>Empresa Verificada</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="reveal">
+                    <div class="cta-banner">
+                        <h2>Encontrou um vazamento? Fale com a gente agora!</h2>
+                        <a href="https://wa.me/556193763352" class="btn-whatsapp" style="justify-content: center; margin-bottom: 20px;">
+                            💬 Chamar no WhatsApp
+                        </a>
+                        <span class="cta-number">(61) 99376-3352</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pagamento -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="payment-section reveal">
+                <h2>Parcelamento em até 12x Sem Juros</h2>
+                <p>Facilitamos o pagamento para você não ter dor de cabeça.</p>
+                <div class="payment-badges">
+                    <div class="payment-badge">
+                        <svg width="60" height="40" viewBox="0 0 32 32"><path d="M25 4h-18c-2.209 0-4 1.791-4 4v16c0 2.209 1.791 4 4 4h18c2.209 0 4-1.791 4-4v-16c0-2.209-1.791-4-4-4z" fill="#1A1F71"/><path d="M12.127 11.233l-1.921 5.432h-1.077l1.096-3.149-1.127-2.283h2.029zm4.27 0l-1.047 5.432h-1.011l1.047-5.432h1.011zm5.106 3.149c0 1.258-1.706 1.332-1.706 1.867 0 .237.19.467.571.467.667 0 1.139-.296 1.139-.296l.2-.958s-.438.196-.943.196c-.343 0-.524-.136-.524-.343 0-.584 1.706-.682 1.706-1.867 0-.57-.495-.914-1.144-.914-.738 0-1.18.293-1.18.293l-.19.982s.495-.219 1.034-.219c.305 0 .438.16.438.393zm-3.033-3.149l-.794 3.149-.333-1.633h1.127z" fill="#FFF"/></svg>
+                        <span style="color:#1A1F71; font-weight: 800; margin-left: 5px;">VISA</span>
+                    </div>
+                    <div class="payment-badge">
+                        <svg width="60" height="40" viewBox="0 0 32 32"><circle r="8" cx="12" cy="16" fill="#EB001B" /><circle r="8" cx="20" cy="16" fill="#F79E1B" opacity="0.8" /><text x="6" y="28" font-size="6" fill="#333" font-weight="bold">Mastercard</text></svg>
+                    </div>
+                    <div class="payment-badge">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#27ae60" stroke-width="2" style="margin-right:8px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        <span style="color:#333; font-weight: 700;">Pagamento Seguro</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contato">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info reveal">
+                    <a href="#" class="logo">
+                        <svg class="logo-svg" viewBox="0 0 300 160" xmlns="http://www.w3.org/2000/svg">
+                            <g transform="translate(45, 10)" stroke="white" stroke-width="5" stroke-linecap="round" fill="none">
+                                <path d="M0 45V0 M5 10 L20 35 M35 10 L20 35 M40 0V45" />
+                                <rect x="65" y="0" width="4" height="45" fill="white" rx="2" stroke="none" />
+                                <rect x="78" y="0" width="4" height="45" fill="white" rx="2" stroke="none" />
+                                <path d="M102 0 L142 45 M142 0 L102 45" />
+                                <path d="M115 45 L122 35 L129 45" />
+                            </g>
+                            <text x="50%" y="95" fill="white" font-family="'Roboto Slab', serif" font-weight="500" font-size="28" text-anchor="middle">Caça Vazamentos</text>
+                            <g transform="translate(150, 145)">
+                                <path d="M0 -40 Q5 -25 10 -15 A10 10 0 1 1 -10 -15 Q-5 -25 0 -40 Z" fill="white" stroke="none" />
+                                <ellipse cx="0" cy="0" rx="45" ry="7" stroke="var(--cyan)" stroke-width="2.5" fill="none" opacity="0.7" />
+                            </g>
+                        </svg>
+                    </a>
+                    <p>Referência em detecção de vazamentos em Brasília. Honestidade, precisão e tecnologia a serviço da sua tranquilidade.</p>
+                </div>
+                <div class="footer-links reveal">
+                    <h4>Navegação</h4>
+                    <ul>
+                        <li><a href="#inicio">Início</a></li>
+                        <li><a href="#servicos">Serviços</a></li>
+                        <li><a href="#diferenciais">Diferenciais</a></li>
+                        <li><a href="#contato">Contato</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links reveal">
+                    <h4>Contato</h4>
+                    <ul>
+                        <li>📱 <a href="https://wa.me/556193763352">(61) 99376-3352</a></li>
+                        <li>📞 <a href="tel:+556193763352">(61) 99376-3352</a></li>
+                        <li>🌐 <a href="http://www.mixvazamentos.com.br">mixvazamentos.com.br</a></li>
+                        <li>📍 Brasília, DF</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Mix Caça Vazamentos. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/556193763352" class="whatsapp-float">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.414 0 .004 5.412 0 12.048c0 2.12.554 4.189 1.605 6.006L0 24l6.149-1.613a11.782 11.782 0 005.9 1.583h.005c6.634 0 12.045-5.414 12.049-12.05a11.75 11.75 0 00-3.489-8.496z"/></svg>
+    </a>
+
+    <script>
+        // Navbar scroll effect
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.style.padding = '5px 0';
+                header.style.background = 'rgba(27, 58, 92, 0.95)';
+            } else {
+                header.style.padding = '0';
+                header.style.background = 'rgba(27, 58, 92, 0.8)';
+            }
+        });
+
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('menu-toggle');
+        const navLinks = document.getElementById('nav-links');
+
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('mobile-active');
+            menuToggle.classList.toggle('active');
+            
+            // Animation for hamburger
+            const spans = menuToggle.querySelectorAll('span');
+            if (navLinks.classList.contains('mobile-active')) {
+                spans[0].style.transform = 'rotate(45deg) translate(6px, 6px)';
+                spans[1].style.opacity = '0';
+                spans[2].style.transform = 'rotate(-45deg) translate(6px, -6px)';
+            } else {
+                spans[0].style.transform = 'none';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = 'none';
+            }
+        });
+
+        // Reveal animations on scroll
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        // Close mobile menu on link click
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('mobile-active');
+                const spans = menuToggle.querySelectorAll('span');
+                spans[0].style.transform = 'none';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = 'none';
+            });
+        });
+    </script>
+</body>
+</html>
